@@ -10,20 +10,42 @@ sc = OAuth2(None, None, from_file='oauth2.json')
 
 gm = yfa.Game(sc, 'nfl')
 
-leagues = gm.league_ids()
+# leagues = gm.league_ids()
 
 # print(leagues)
 
 # get league object
 lg = gm.to_league('406.l.763037')
 
+tms = lg.teams()
+teamKeys = tms.keys()
+
+teams = []
+
+for key in teamKeys:
+    teams.append(lg.to_team(key))
+
+# for team in teams:
+#     print(team)
+
+playerIDs = []
+
+for team in teams:
+    for player in team.roster(1):
+        playerIDs.append(player['player_id'])
+
+for playerid in playerIDs:
+    lg.player_stats(playerid)
+
+
+
 # statCat = lg.stat_categories()
 
 # print(statCat)
 
-settings = lg.settings()
+# settings = lg.settings()
 
-print(settings)
+# print(settings)
 
 
 # teams = lg.teams()
